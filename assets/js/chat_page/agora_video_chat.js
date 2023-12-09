@@ -37,6 +37,9 @@ $("body").on('mouseleave', '.main .middle > .video_chat_interface', function(e) 
     $(".main .middle>.video_chat_interface>.video_chat_container>.icons").fadeOut();
 });
 
+
+
+
 $("body").on("click", ".main .chatbox .join_audio_call", function(e) {
 
     video_chat_formData = new FormData();
@@ -80,7 +83,7 @@ $("body").on("click", ".main .chatbox .join_audio_call", function(e) {
         }
 
         initilazing_video_chat();
-        create_video_chat();
+        create_video_chat(true);
     }
 });
 
@@ -158,7 +161,7 @@ $("body").on("click", ".main .middle > .video_chat_interface > .video_chat_conta
 });
 
 
-$("body").on("click", ".main .middle > .video_chat_interface > .video_chat_container .toggle_video_call_camera", function(e) {
+function toggleCamera(e) {
 
     if (!agora_video_client) {
         return;
@@ -186,7 +189,9 @@ $("body").on("click", ".main .middle > .video_chat_interface > .video_chat_conta
         $(this).find('.cam_not_disabled').removeClass('d-none');
     }
 
-});
+}
+
+$("body").on("click", ".main .middle > .video_chat_interface > .video_chat_container .toggle_video_call_camera", toggleCamera);
 
 
 agora_video_client = AgoraRTC.createClient({
@@ -195,7 +200,7 @@ agora_video_client = AgoraRTC.createClient({
 agora_video_client.on("user-published", handleUserPublished);
 agora_video_client.on("user-unpublished", handleUserUnpublished);
 
-var create_video_chat = async () => {
+var create_video_chat = async (videoMuted) => {
     try {
 
         if (isVideoChatActive) {
@@ -203,7 +208,7 @@ var create_video_chat = async () => {
             leaveChannel();
         }
 
-        await joinChannel();
+        await joinChannel(videoMuted);
         console.log('AgoraRTC client initialized');
     } catch (error) {
         console.log(error);
@@ -216,7 +221,7 @@ var exit_video_chat = async () => {
     stop_update_video_chat_status();
 };
 
-async function joinChannel() {
+async function joinChannel(videoMuted = false) {
 
     var response = await fetch(api_request_url, {
         method: 'POST',
@@ -278,6 +283,7 @@ async function joinChannel() {
     console.log("publish success");
     arrange_video_chat_grid();
     update_video_chat_status();
+    if (videoMuted) toggleCamera();
 }
 
 async function leaveChannel() {
