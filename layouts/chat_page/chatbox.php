@@ -37,9 +37,6 @@ if (Registry::load('settings')->show_timestamp_on_mouseover === 'enable') {
         </div>
     </div>
     <div class="icons">
-        <span class="join_audio_call">
-            <svg aria-hidden="true" focusable="false" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><path fill="currentColor" d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
-        </span>
         
         <?php
         if (Registry::load('current_user')->logged_in) {
@@ -56,6 +53,9 @@ if (Registry::load('settings')->show_timestamp_on_mouseover === 'enable') {
             <?php
             if (Registry::load('settings')->video_chat !== 'disable') {
                 ?>
+                <span class="join_audio_call">
+                    <svg aria-hidden="true" focusable="false" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><path fill="currentColor" d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
+                </span>
                 <span class="join_video_call_icon join_video_call d-none">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 1024 1024">
                         <path fill="currentColor" d="M713.6 780.8v-537.6h-604.8v537.6h604.8zM780.8 344l201.6-100.8v537.6l-201.6-100.8v134.4c0 18.557-15.043 33.6-33.6 33.6v0h-672c-18.557 0-33.6-15.043-33.6-33.6v0-604.8c0-18.557 15.043-33.6 33.6-33.6v0h672c18.557 0 33.6 15.043 33.6 33.6v0 134.4zM780.8 419.13v185.74l134.4 67.2v-320.14l-134.4 67.2zM176 310.4h201.6v67.2h-201.6v-67.2z"></path>

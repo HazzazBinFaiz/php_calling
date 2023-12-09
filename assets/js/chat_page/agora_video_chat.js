@@ -37,6 +37,53 @@ $("body").on('mouseleave', '.main .middle > .video_chat_interface', function(e) 
     $(".main .middle>.video_chat_interface>.video_chat_container>.icons").fadeOut();
 });
 
+$("body").on("click", ".main .chatbox .join_audio_call", function(e) {
+
+    video_chat_formData = new FormData();
+    video_chat_formData.append('add', 'video_chat');
+
+    if ($(".main .chatbox").attr('group_id') !== undefined) {
+        video_chat_formData.append('group_id', $(".main .chatbox").attr('group_id'));
+    } else if ($(".main .chatbox").attr('user_id') !== undefined) {
+        video_chat_formData.append('user_id', $(".main .chatbox").attr('user_id'));
+    } else {
+        console.log('Error : Failed to fetch conversation info');
+        return;
+    }
+
+    if (user_csrf_token !== null) {
+        video_chat_formData.append('csrf_token', user_csrf_token);
+    }
+
+    if (user_login_session_id !== null && user_access_code !== null && user_session_time_stamp !== null) {
+        video_chat_formData.append('login_session_id', user_login_session_id);
+        video_chat_formData.append('access_code', user_access_code);
+        video_chat_formData.append('session_time_stamp', user_session_time_stamp);
+    }
+
+    $('.main .middle > .video_chat_interface > .video_chat_container > .video_chat_grid').html('');
+    $('.main .middle > .video_chat_interface').removeClass('d-none');
+
+    if (call_notification_timeout_id) {
+        clearTimeout(call_notification_timeout_id);
+    }
+
+    $('.call_notification').attr('current_call_id', 0);
+    $('.call_notification').addClass('d-none');
+
+    if (isVideoChatActive) {
+        exit_video_chat();
+    } else {
+
+        if ($('.main .chatbox').attr('user_id') !== undefined) {
+            current_video_caller_id = $('.main .chatbox').attr('user_id');
+        }
+
+        initilazing_video_chat();
+        create_video_chat();
+    }
+});
+
 $("body").on("click", ".main .chatbox .join_video_call", function(e) {
 
     video_chat_formData = new FormData();
